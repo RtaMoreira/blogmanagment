@@ -1,0 +1,39 @@
+<!DOCTYPE HTML SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Profile</h1>
+<h2>My articles</h2>
+<table class="table table-striped" th:if="${articles.size() >0}">
+	<tr>
+	    <th>Title</th>
+	   	<th>Date</th>
+	   	<th>Text</th>
+	    <th>Image</th>
+	    <th>Category</th>
+	   	<th></th>
+	   	<th></th>
+
+
+    
+    
+   	</tr>  
+	<tr th:each = "article : ${articles}">
+		<td th:text="${article.title}"></td>
+		<td th:text="${article.date}"></td>   		
+		<td th:text="${article.text}"></td> 
+		<td th:text="${article.imageURL}"></td>
+		<td th:text="${article.category.name}"></td>
+		<td><a th:href="@{/edit/{id}(id=${article.id})}">Edit</a></td>
+		<td><a th:href="@{/delete/{id}(id=${article.id})}">Delete</a></td> 		
+	</tr>
+</table>
+<h3 th:if="${articles.size() == 0}" th:text="${'You haven''t written yet.'}" />
+
+<a href="/newarticle" class="btn btn-success"> Add new article </a>
+
+</body>
+</html>
