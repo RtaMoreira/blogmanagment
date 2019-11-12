@@ -87,10 +87,13 @@ public class Article {
 		            System.out.print("PATH :"+System.getProperty("user.dir"));
 		            System.out.print("FILE PATH :"+file.getAbsolutePath());
 		            log.info("PATH OF STORED IMAGE :"+file.getAbsolutePath());
-		            log.info("position  :"+System.getProperty("user.dir"));
 
 	            byte[] bytes = files.getBytes();
-	            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(dirLocation+new File(fileName)));
+	            File newFile = new File(fileName);
+	            System.out.println("DIRLOCATION + FILENAME :"+dirLocation+newFile);
+	            System.out.println("NEW FILE LOCATION : "+newFile.getAbsolutePath());
+
+	            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(dirLocation+newFile));
 	            bufferedOutputStream.write(bytes);
 	            bufferedOutputStream.close();
 	        } catch (IOException ex) {
