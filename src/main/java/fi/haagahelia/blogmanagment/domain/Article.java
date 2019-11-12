@@ -97,8 +97,11 @@ public class Article {
 	            bufferedOutputStream.close();
 	        } catch (IOException ex) {
 	            ex.printStackTrace();
+	            log.info("ERROR saving file");
+	            log.info("position  :"+System.getProperty("user.dir"));
 	        }
 	    }
+	    
 	}
 
 	//getters/setters
