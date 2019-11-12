@@ -82,15 +82,13 @@ public class Article {
 	        try {
 	            String fileName = files.getOriginalFilename();
 	            String dirLocation ="/app/src/main/resources/static/img/";
-	            if(!new File(dirLocation).exists()){
 	                File file = new File(dirLocation);
 	                file.mkdirs();
 		            System.out.print("PATH :"+System.getProperty("user.dir"));
 		            System.out.print("FILE PATH :"+file.getAbsolutePath());
 		            log.info("PATH OF STORED IMAGE :"+file.getAbsolutePath());
 		            log.info("position  :"+System.getProperty("user.dir"));
-		            
-	            }
+
 	            byte[] bytes = files.getBytes();
 	            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(dirLocation+new File(fileName)));
 	            bufferedOutputStream.write(bytes);
