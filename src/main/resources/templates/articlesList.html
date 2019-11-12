@@ -2,35 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
-</head>
-<body>
-<a href="/profile" class="btn btn-success">My profile</a>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}" />
 
-<h1>Articles</h1>
-<table class="table table-striped">
-	<tr>
-	    <th>Title</th>
-	    <th>Author</th>
-	   	<th>Date</th>
-	   	<th>Text</th>
-	    <th>Category</th>
-	    
-	    
-	</tr>  
-	<tr th:each = "article : ${articles}" th:onclick="'window.location.href = \'' + @{/article/{id}(id=${article.id})} + '\''">
-		<td th:text="${article.title}"></td>
-		<td th:text="${article.author.username}"></td>
-		<td th:text="${article.date}"></td>   		
-		<td th:text="${article.text}"></td> 
-		<td th:text="${article.category.name}"></td>	
-	</tr>
- </table>
- <form th:action="@{/login}" method="post">
- <input type="submit" value="Log in" class="btn btn-primary"/>
-</form>
- <form th:action="@{/logout}" method="post">
- <input type="submit" value="Log Out" class="btn btn-primary"/>
-</form>
+    </head>
+<body>
+<nav class="navbar navbar-light bg-light sticky-top shadow p-3 mb-5 bg-white rounded">
+	<a class="navbar-brand" href="/articles"><h1>Ritablog</h1></a>
+	<div style="float:right;">
+		<a th:href="@{/profile}" class="btn btn-success" th:if="${#httpServletRequest.remoteUser != null}">My profile</a>
+		<a th:href="@{/login}" class="btn btn-success" th:if="${#httpServletRequest.remoteUser == null}">Sign In</a>
+		<a th:href="@{/logout}" class="btn btn-outline-danger" th:if="${#httpServletRequest.remoteUser != null}">Sign Out</a>
+	</div>
+</nav>
+
+<div class="content">
+	<div class="buttons mx-auto" style="width: 500px;">
+		<a th:href="@{/articles}"  class="btn btn-info" >All</a>
+		<a th:href="@{/articles/Sports}"  class="btn btn-secondary">Sports</a>
+				<a th:href="@{/articles/Business}"  class="btn btn-success" >Business</a>
+		<a th:href="@{/articles/Health}" class="btn btn-primary">Health</a>
+		<a th:href="@{/articles/Lifestyle}" class="btn btn-danger">Lifestyle</a>
+
+	</div>
+	<div th:each = "article : ${articles}" class="card shadow-sm p-3 mb-5 bg-white rounded">
+		<div class="card-body" >
+			<span th:text="${article.category.name}" class="badge badge-info" style="font-size: 1em;margin-bottom : 0.5em;"></span>
+			<img th:src="@{../img/{image}(image=${article.imageURL})}" class="card-img-top" alt="...">
+			<h3 th:text="${article.title}" class="card-title"></h3>
+			<h6 th:text="'written by '+${article.author.username}+', '+${article.date}" class="card-subtitle mb-2 text-muted"></h6>
+			<p th:if="${#strings.length(article.text) < 190}" th:text="${article.text}" class="card-text"></p>
+			<p th:if="${#strings.length(article.text)>=190}" th:text="${#strings.append(#strings.substring(article.text,0,190),'...')}" class="card-text"></p>
+
+			<a th:href="@{/article/{id}(id=${article.id})}" class="card-link btn btn-outline-info">Read more</a>
+		</div>
+	</div>
+</div>
 </body>
 </html>

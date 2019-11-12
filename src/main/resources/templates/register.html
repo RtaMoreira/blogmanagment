@@ -15,18 +15,14 @@
     </a>
     </nav>
      <div class="col-md-4 col-md-offset-4">
-        <div class="alert alert-danger" th:if="${param.error}">
-            Invalid username and password.
-        </div>
-        <div class="alert alert-warning" th:if="${param.logout}">
-            You have been logged out.
-        </div>
-        <form th:action="@{/login}" method="post">
-            <div><label> User Name : <input type="text" name="username" class="form-control"/> </label></div>
-            <div><label> Password: <input type="password" name="password" class="form-control"/> </label></div>
-            <div><input type="submit" value="Sign In" class="btn btn-primary"/></div>
+		 <h2>Create your account</h2>
+		<form th:object="${member}" th:action="@{/saveMember}" method="post">
+			
+            <div><label> User Name : <input th:field="*{username}"type="text" name="username" class="form-control"/> </label></div>
+            <div><label> Password: <input th:field="*{password}" type="password" name="password" class="form-control"/> </label></div>
+            <div><input type="submit" value="Register" class="btn btn-primary"/></div>
         </form>
-		<p>Not a member yet? <a th:href="@{/register}"> Register !</a> </p>
        </div>
     </body>
+    
 </html>

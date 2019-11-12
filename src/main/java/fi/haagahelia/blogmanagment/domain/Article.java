@@ -33,6 +33,7 @@ public class Article {
 	
     @Column(name="text", columnDefinition="CLOB NOT NULL") 
 	private String text;
+    @Column(name="imageURL", columnDefinition="CLOB NOT NULL") 
 	private String imageURL;
 	
 	@ManyToOne

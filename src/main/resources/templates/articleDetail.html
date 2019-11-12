@@ -1,42 +1,56 @@
 <!DOCTYPE HTML SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+	<link type="text/css" rel="stylesheet" href="css/style.css" th:href="@{../css/style.css}" />
+
 </head>
+
 <body>
-<div th:object="${article}">
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<h1 th:text="*{title}" />
-<p th:text="'written by '+*{author.username}" />
-<p th:text="*{date}" />
-<img src="~/src/main/resources/static/img/"  th:src="@{../img/{image}(image=*{imageURL})}" />
+	<nav class="navbar navbar-light bg-light sticky-top shadow p-3 mb-5 bg-white rounded">
+		<a class="navbar-brand" th:href="@{/articles}">
+			<h1>Ritablog</h1>
+		</a>
+		<div style="float:right;">
+			<a th:href="@{/profile}" class="btn btn-success" th:if="${#httpServletRequest.remoteUser != null}">My profile</a>
+			<a th:href="@{/login}" class="btn btn-success" th:if="${#httpServletRequest.remoteUser == null}">Sign In</a>
+			<a th:href="@{/logout}" class="btn btn-outline-danger" th:if="${#httpServletRequest.remoteUser != null}">Sign Out</a>
+		</div>
+	</nav>
+<div th:object="${article}" id="content">
+	<div class="text-justify">
+		<h1 th:text="*{title}" />
+		<p th:text="'written by '+*{author.username}+', '+*{date}" class="font-italic"/>
+		<img src="~/src/main/resources/static/img/"  th:src="@{../img/{image}(image=*{imageURL})}" class="mb-5" style="max-width: 70%"/>
 
-<p th:text="*{text}" />
-
-<table class="table table-striped"> 
-	<tr th:each = "comment : ${comments}">
-		<td th:text="${comment.title}"></td>
-		<td th:text="${comment.author.username}"></td>
-		<td th:text="${comment.date}"></td>   		
-		<td th:text="${comment.text}"></td> 
-	</tr>
-</table>
-<div th:if="${comment.author != null}">
-<h3>Add a comment :</h3>
-	<form th:object="${comment}" th:action="@{/saveComment}" action="#" method="post">
-	<input type="hidden" class="form-control" th:field="*{article}" />
-	<input type="hidden" class="form-control" th:field="*{author}" />
-	<div class="form-group">
-		<label for="title">Title</label>
-		<input type="text" id="title" th:field="*{title}"/>
-		<label for="comment">Comment</label>
-		<input type="text" id="comment" th:field="*{text}"/>
+		<p th:text="*{text}" class="mb-5"/>
+	</div>
+<h2>Comments</h2>
+	<div class="comment" th:each = "comment : ${comments}">
+		<p th:text="${comment.title}">Title</p>
+		<p  th:text="'by '+${comment.author.username}+', '+${comment.date}">by ritinha, 2019-13-20 18:50</p>
+		<p th:text="${comment.text}">text texte text</p>
 	</div>
 
-	<input type="submit" value="Save" class="btn btn-primary" />
-	</form>
-</div>
+<div th:if="${comment.author != null}" style="background-color: #cbe2e5; padding : 0.5em;">
+	<h4>Add a new comment :</h4>
+		<form th:object="${comment}" th:action="@{/saveComment}" action="#" method="post">
+		<input type="hidden" class="form-control" th:field="*{article}" />
+		<input type="hidden" class="form-control" th:field="*{author}" />
+		<div class="form-group">
+			<label for="title">Title</label>
+			<input type="text" id="title" th:field="*{title}" placeholder="Title" class="form-control col-6"/>
+			<label for="comment">Comment</label>
+			<input type="text" id="comment" th:field="*{text}" placeholder="Your comment" class="form-control col-6"/>
+		</div>
+
+		<input type="submit" value="Save" class="btn btn-info" />
+		</form>
+	</div>
+	<a class="btn btn-secondary" th:href="@{/articles}" style="margin: 8px;">Back</a>
+
 </div>
 
 

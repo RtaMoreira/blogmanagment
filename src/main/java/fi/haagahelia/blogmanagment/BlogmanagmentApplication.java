@@ -1,6 +1,7 @@
 package fi.haagahelia.blogmanagment;
 
 
+import java.io.File;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -40,24 +41,26 @@ public class BlogmanagmentApplication {
 			catRepo.save(new Category("Health"));
 			
 
-			Member mem1 = new Member("ritinha", "$2a$10$pcyvJXKC3KyOBx988OOBB.Zx6qTNCWJoUNWW7rAJQPpOWPz0mo/n2","USER"); //pwd : user
+			Member mem1 = new Member("user", "$2a$10$pcyvJXKC3KyOBx988OOBB.Zx6qTNCWJoUNWW7rAJQPpOWPz0mo/n2","USER"); //pwd : user
 			Member mem2 = new Member("bob", "$2a$10$pcyvJXKC3KyOBx988OOBB.Zx6qTNCWJoUNWW7rAJQPpOWPz0mo/n2","USER"); //pwd : user
 			
 			memRepo.save(mem1);
 			memRepo.save(mem2);
+			artRepo.save(new Article("Zidane: Mbappe dreams of Real Madrid move", new Date(), "Integer nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc. Sed vehicula egestas faucibus. Ut tristique leo metus, eget pharetra libero sodales quis. Aliquam maximus volutpat efficitur. Ut bibendum imperdiet felis tincidunt accumsan.", "sports.jpg", mem1, catRepo.findByName("Sports")));
+			artRepo.save(new Article("Cat credited with saving baby from falling down the stairs", new Date(), "Integer nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc. Sed vehicula egestas faucibus. Ut tristique leo metus, eget pharetra libero sodales quis. Aliquam maximus volutpat efficitur. Ut bibendum imperdiet felis tincidunt accumsan.", "lifestyle.jpg", mem1, catRepo.findByName("Lifestyle")));
 			
-			artRepo.save(new Article("Article 1 title", new Date(), "Integer nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc. Sed vehicula egestas faucibus. Ut tristique leo metus, eget pharetra libero sodales quis. Aliquam maximus volutpat efficitur. Ut bibendum imperdiet felis tincidunt accumsan.", "business.jpg", mem1, catRepo.findByName("Sports")));
-			artRepo.save(new Article("Article 2 title", new Date(), "Integer nec posuere elit, eu fermentum nunc. Sed vehicula egestas faucibus. Ut tristique leo metus, eget pharetra libero sodales quis. Aliquam maximus volutpat efficitur. Ut bibendum imperdiet felis tincidunt accumsan.", "business.jpg", mem1, catRepo.findByName("Business")));
+			artRepo.save(new Article("WeWork says it will divest all ‘non-core’ businesses", new Date(), "Integer nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nuncInteger nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc.Integer nec posuere elit, eu fermentum nunc. Sed vehicula egestas faucibus. Ut tristique leo metus, eget pharetra libero sodales quis. Aliquam maximus volutpat efficitur. Ut bibendum imperdiet felis tincidunt accumsan.", "business.jpeg", mem2, catRepo.findByName("Business")));
+			artRepo.save(new Article("This vitamin D mechanism helps combat melanoma", new Date(), "Integer nec posuere elit, eu fermentum nunc. Sed vehicula egestas faucibus. Ut tristique leo metus, eget pharetra libero sodales quis. Aliquam maximus volutpat efficitur. Ut bibendum imperdiet felis tincidunt accumsan.", "health.jpg", mem2, catRepo.findByName("Health")));
 
 			for (Article article : artRepo.findAll()) {
 				log.info(article.toString());
 			}
 			
 			//Comment com1 = new Comment( memRepo.findByUsername("bob"), artRepo.findByTitle("Article 1 title").get(0),(new Date()), "blablabla im commenting you post", "such a good comment");
-			comRepo.save(new Comment("Commentaire. Integer nec posuere elit.", "Title commentaire",new Date(), memRepo.findByUsername("bob"), artRepo.findByTitle("Article 1 title").get(0)));
-			comRepo.save(new Comment("Commentaire. Integer nec posuere elit.", "Title commentaire",new Date(), memRepo.findByUsername("bob"), artRepo.findByTitle("Article 1 title").get(0)));
-			comRepo.save(new Comment("Commentaire. Integer nec posuere elit.", "Title commentaire",new Date(), memRepo.findByUsername("ritinha"), artRepo.findByTitle("Article 2 title").get(0)));
-			comRepo.save(new Comment("Commentaire. Integer nec posuere elit.", "Title commentaire",new Date(), memRepo.findByUsername("ritinha"), artRepo.findByTitle("Article 2 title").get(0)));
+			comRepo.save(new Comment("Integer nec posuere elit.eu fermentum nuncInteger nec posuere elit, eu fermentum nunc. Integer nec posuere elit, eu fermentum nuncInteger.", "How can he? He is betraying France!!",new Date(), memRepo.findByUsername("bob"), artRepo.findByTitle("Zidane: Mbappe dreams of Real Madrid move").get(0)));
+			comRepo.save(new Comment("Integer nec posuere elit.eu fermentum nunc.", "What about Juventus?",new Date(), memRepo.findByUsername("bob"), artRepo.findByTitle("Zidane: Mbappe dreams of Real Madrid move").get(0)));
+			comRepo.save(new Comment("Integer nec posuere elit.", "I love cats !!",new Date(), memRepo.findByUsername("user"), artRepo.findByTitle("Cat credited with saving baby from falling down the stairs").get(0)));
+			comRepo.save(new Comment("nteger nec posuere elit. eu fermentum nunc.", "Who run the world? CATS! ",new Date(), memRepo.findByUsername("user"), artRepo.findByTitle("Cat credited with saving baby from falling down the stairs").get(0)));
 			
 
 		};
