@@ -75,7 +75,7 @@ public class Article {
 	    if(!files.isEmpty()){
 	        try {
 	            String fileName = files.getOriginalFilename();
-	            String dirLocation ="src/main/resources/static/img/";
+	            String dirLocation ="../../resources/static/img/";
 	            if(!new File(dirLocation).exists()){
 	                File file = new File(dirLocation);
 	                file.mkdirs();
