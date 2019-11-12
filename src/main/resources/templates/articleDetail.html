@@ -23,7 +23,7 @@
 	<div class="text-justify">
 		<h1 th:text="*{title}" />
 		<p th:text="'written by '+*{author.username}+', '+*{date}" class="font-italic"/>
-		<img src="~/src/main/resources/static/img/"  th:src="@{../img/{image}(image=*{imageURL})}" class="mb-5" style="max-width: 70%"/>
+		<img src=""  th:src="@{../img/{image}(image=*{imageURL})}" class="mb-5" style="max-width: 70%"/>
 
 		<p th:text="*{text}" class="mb-5"/>
 	</div>

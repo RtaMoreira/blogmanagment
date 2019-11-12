@@ -125,16 +125,6 @@ public class ArticleController {
 
 		// if a new image is picked
 		if (!file.getOriginalFilename().isEmpty()) {
-			// copy and save image
-			
-			/*try {
-				byte[] content = file.getBytes();
-				article.setImageURL(Base64.getEncoder().encodeToString(content));	
-				System.out.print("ENCODED IMAGEEEE");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
 
 			//save filename in DB 
 			article.setImageURL(file.getOriginalFilename());
