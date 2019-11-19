@@ -28,7 +28,7 @@
 	<div th:each = "article : ${articles}" class="card shadow-sm p-3 mb-5 bg-white rounded">
 		<div class="card-body" >
 			<span th:text="${article.category.name}" class="badge badge-info" style="font-size: 1em;margin-bottom : 0.5em;"></span>
-			<img th:src="@{../img/{image}(image=${article.imageURL})}" class="card-img-top" alt="...">
+			<img  th:src="'data:image/png;base64,'+${article.imageURL}"class="card-img-top image" alt="...">
 			<h3 th:text="${article.title}" class="card-title"></h3>
 			<h6 th:text="'written by '+${article.author.username}+', '+${article.date}" class="card-subtitle mb-2 text-muted"></h6>
 			<p th:if="${#strings.length(article.text) < 190}" th:text="${article.text}" class="card-text"></p>
@@ -38,5 +38,6 @@
 		</div>
 	</div>
 </div>
+
 </body>
 </html>

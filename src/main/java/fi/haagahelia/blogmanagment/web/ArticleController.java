@@ -1,14 +1,19 @@
 package fi.haagahelia.blogmanagment.web;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -70,16 +75,18 @@ public class ArticleController {
 		String loggedUser = auth.getName(); // get logged in username
 		
 		if (loggedUser.isEmpty()) {
-			repository.findById(articleId).ifPresent(art -> {
-				//byte[] decodedBytes = Base64.getDecoder().decode(art.getImageURL());
+			Article art = repository.findById(articleId).get();
+				byte[] decodedBytes = Base64.getDecoder().decode(art.getImageURL());
 				//try {
-				//	File image = new File("src/main/resources/static/img/test.jpg");
-				//	FileUtils.writeByteArrayToFile(image, decodedBytes);
-				//	ModelMap map = new ModelMap();
-				//	map.put("image", image);
+					//File image = new File("image.jpg");
+					//System.out.println("IMAGE PAAAAAATH : "+ image.getAbsolutePath());
+					//FileUtils.writeByteArrayToFile(image, decodedBytes);
+					//ModelMap map = new ModelMap();
+					model.addAttribute("image", decodedBytes);
 				//} catch (IOException e) {
 					// TODO Auto-generated catch block
-				//	e.printStackTrace();
+					//e.printStackTrace();
+					//System.out.println("ERROOR : "+e.getMessage());
 				//}
 				model.addAttribute("article", art);
 
@@ -89,12 +96,14 @@ public class ArticleController {
 
 				// instantiate a comment model (for adding comment)
 				model.addAttribute("comment", new Comment());
-
-			});
 		} else {
 
 			// unwrap the object "article" from Optional<Article>
 			repository.findById(articleId).ifPresent(art -> {
+				
+				byte[] decodedBytes = Base64.getDecoder().decode(art.getImageURL());
+					model.addAttribute("image", decodedBytes);
+					
 				model.addAttribute("article", art);
 
 				// get comments of that article
@@ -125,10 +134,19 @@ public class ArticleController {
 
 		// if a new image is picked
 		if (!file.getOriginalFilename().isEmpty()) {
+	
+			try {
+				byte[] content = file.getBytes();
+				article.setImageURL(Base64.getEncoder().encodeToString(content));	
+				System.out.print("ENCODED IMAGEEEE");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			//save filename in DB 
-			article.setImageURL(file.getOriginalFilename());
-			article.saveMultipartFile(file);
+			//article.setImageURL(file.getOriginalFilename());
+			//article.saveMultipartFile(file);
 		}
 		repository.save(article);
 		return "redirect:articles";

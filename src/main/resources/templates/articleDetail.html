@@ -5,7 +5,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
 	<link type="text/css" rel="stylesheet" href="css/style.css" th:href="@{../css/style.css}" />
-
 </head>
 
 <body>
@@ -23,8 +22,7 @@
 	<div class="text-justify">
 		<h1 th:text="*{title}" />
 		<p th:text="'written by '+*{author.username}+', '+*{date}" class="font-italic"/>
-		<img src=""  th:src="@{../img/{image}(image=*{imageURL})}" class="mb-5" style="max-width: 70%"/>
-
+   	<img th:src="'data:image/png;base64,'+*{imageURL}" id="image"/>
 		<p th:text="*{text}" class="mb-5"/>
 	</div>
 <h2>Comments</h2>
@@ -52,7 +50,5 @@
 	<a class="btn btn-secondary" th:href="@{/articles}" style="margin: 8px;">Back</a>
 
 </div>
-
-
 </body>
 </html>
