@@ -25,7 +25,6 @@
 	    <th>Title</th>
 	   	<th>Date</th>
 	   	<th>Text</th>
-	    <th>Image</th>
 	    <th>Category</th>
 	   	<th></th>
 	   	<th></th>
@@ -39,7 +38,6 @@
 		<td th:text="${article.date}"></td>   		
 		<td th:if="${#strings.length(article.text)>=190}" th:text="${#strings.append(#strings.substring(article.text,0,190),'...')}"></td> 
 		<td th:if="${#strings.length(article.text)<190}" th:text="${article.text}"></td> 
-		<td th:text="${article.imageURL}"></td>
 		<td th:text="${article.category.name}"></td>
 		<td><a th:href="@{/edit/{id}(id=${article.id})}">Edit</a></td>
 		<td><a th:href="@{/delete/{id}(id=${article.id})}">Delete</a></td> 		
