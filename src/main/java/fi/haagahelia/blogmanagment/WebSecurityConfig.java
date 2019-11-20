@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-        .authorizeRequests().antMatchers("/","/css/**","/articles/**","/register","/article/**","/image/**","/h2_console/**","/console/**").permitAll() // Enable css when logged out
+        .authorizeRequests().antMatchers("/","/css/**","/articles/**","/register","/article/**","/h2_console/**","/console/**").permitAll()
         .and()
         .authorizeRequests().anyRequest().authenticated()
         .and()

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,8 +20,11 @@ import fi.haagahelia.blogmanagment.domain.MemberRepository;
 @DataJpaTest
 public class ArticleRepositoryTests {
 
+	@Autowired
 	private ArticleRepository repository;
+	@Autowired
 	private MemberRepository memRepository;
+	@Autowired
 	private CategoryRepository catRepository;
 	
 	@Test
@@ -33,7 +37,7 @@ public class ArticleRepositoryTests {
 	
 	@Test
 	public void createNewArticle() {
-		Article article = new Article("title", new Date(), "text of the article", "business.jpeg", memRepository.findByUsername("ritinha"), catRepository.findByName("Business"));
+		Article article = new Article("title", new Date(), "text of the article", "business.jpeg", memRepository.findByUsername("user"), catRepository.findByName("Business"));
 		repository.save(article);
 		assertThat(article.getId()).isNotNull();
 	}
@@ -42,7 +46,7 @@ public class ArticleRepositoryTests {
     public void deleteArticle() {
         List<Article> articles = repository.findByTitle("title of article");
         repository.delete(articles.get(0));
-        articles = repository.findByTitle("Title book");
+        articles = repository.findByTitle("title of article");
     	assertThat(articles.isEmpty());
     }
 }

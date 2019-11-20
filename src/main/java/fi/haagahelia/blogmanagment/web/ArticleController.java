@@ -1,19 +1,15 @@
 package fi.haagahelia.blogmanagment.web;
 
-
-import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import fi.haagahelia.blogmanagment.BlogmanagmentApplication;
 import fi.haagahelia.blogmanagment.domain.Article;
 import fi.haagahelia.blogmanagment.domain.ArticleRepository;
@@ -35,10 +30,7 @@ import fi.haagahelia.blogmanagment.domain.MemberRepository;
 public class ArticleController {
 	private static final Logger log = LoggerFactory.getLogger(BlogmanagmentApplication.class);
 	private static Authentication auth;
-
-	// Save the uploaded file to this folder
-	private static String UPLOADED_FOLDER = "src/main/resources/static/img/";
-
+	
 	@Autowired
 	private ArticleRepository repository;
 
@@ -73,45 +65,25 @@ public class ArticleController {
 
 		auth = SecurityContextHolder.getContext().getAuthentication();
 		String loggedUser = auth.getName(); // get logged in username
-		
+
+		//get article
+		Article art = repository.findById(articleId).get();
+		model.addAttribute("article", art);
+	
+		// article's image
+		byte[] decodedBytes = Base64.getDecoder().decode(art.getImageURL());
+		model.addAttribute("image", decodedBytes);
+
+		//article's image
+		model.addAttribute("comments", comRepo.findByArticle(art));
+
 		if (loggedUser.isEmpty()) {
-			Article art = repository.findById(articleId).get();
-				byte[] decodedBytes = Base64.getDecoder().decode(art.getImageURL());
-				//try {
-					//File image = new File("image.jpg");
-					//System.out.println("IMAGE PAAAAAATH : "+ image.getAbsolutePath());
-					//FileUtils.writeByteArrayToFile(image, decodedBytes);
-					//ModelMap map = new ModelMap();
-					model.addAttribute("image", decodedBytes);
-				//} catch (IOException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					//System.out.println("ERROOR : "+e.getMessage());
-				//}
-				model.addAttribute("article", art);
-
-
-				// get comments of that article
-				model.addAttribute("comments", comRepo.findByArticle(art));
-
-				// instantiate a comment model (for adding comment)
-				model.addAttribute("comment", new Comment());
+			// instantiate a comment model (for adding comment when we are logged)
+			model.addAttribute("comment", new Comment());
 		} else {
 
-			// unwrap the object "article" from Optional<Article>
-			repository.findById(articleId).ifPresent(art -> {
-				
-				byte[] decodedBytes = Base64.getDecoder().decode(art.getImageURL());
-					model.addAttribute("image", decodedBytes);
-					
-				model.addAttribute("article", art);
-
-				// get comments of that article
-				model.addAttribute("comments", comRepo.findByArticle(art));
-
-				// instantiate a comment model (for adding comment)
-				model.addAttribute("comment", new Comment(memRepo.findByUsername(loggedUser), art));
-			});
+			// instantiate a comment model (for adding comment when user is logged)
+			model.addAttribute("comment", new Comment(memRepo.findByUsername(loggedUser), art));
 		}
 
 		return "articleDetail";
@@ -134,19 +106,15 @@ public class ArticleController {
 
 		// if a new image is picked
 		if (!file.getOriginalFilename().isEmpty()) {
-	
+
 			try {
 				byte[] content = file.getBytes();
-				article.setImageURL(Base64.getEncoder().encodeToString(content));	
+				article.setImageURL(Base64.getEncoder().encodeToString(content));
 				System.out.print("ENCODED IMAGEEEE");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-			//save filename in DB 
-			//article.setImageURL(file.getOriginalFilename());
-			//article.saveMultipartFile(file);
 		}
 		repository.save(article);
 		return "redirect:articles";
@@ -171,11 +139,11 @@ public class ArticleController {
 	// add new article
 	@RequestMapping(value = "/newarticle")
 	public String addBook(Model model) {
-		
+
 		// get logged in username
 		auth = SecurityContextHolder.getContext().getAuthentication();
-		String loggedUser = auth.getName(); 
-		
+		String loggedUser = auth.getName();
+
 		model.addAttribute("article", new Article(memRepo.findByUsername(loggedUser)));
 		model.addAttribute("categories", catRepo.findAll());
 		return "addArticle";
